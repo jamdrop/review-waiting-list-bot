@@ -4,6 +4,7 @@ const SlackBot = require('./SlackBot')
 const GitHubApiClient = require("./GitHubApiClient")
 const PullRequests = require('./PullRequests')
 const Parser = require('./Parser')
+const PersonalReminder = require('./PersonalReminder')
 const _ = require('lodash')
 
 class App {
@@ -11,8 +12,11 @@ class App {
     this.beforeValidate()
 
     const controller = new SlackBot().getController()
-
     controller.hears("ls (.+)", ["direct_message", "direct_mention", "mention"], this.ls)
+
+    const reminder = new PersonalReminder(controller)
+    reminder.start()
+
   }
 
   static ls(bot, message) {
@@ -46,6 +50,9 @@ class App {
     }
     if (!process.env.SLACK_BOT_TOKEN) {
       errors.push('Error: SLACK_BOT_TOKEN is missing.')
+    }
+    if (!process.env.PERSONAL_CRON) {
+      errors.push('Error: PERSONAL_CRON is missing.')
     }
 
     if (errors.length > 0) {

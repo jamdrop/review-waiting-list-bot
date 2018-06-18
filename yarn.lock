@@ -350,6 +350,10 @@
     babel-runtime "^6.23.0"
     envify "^4.1.0"
 
+"@types/cron@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@types/cron/-/cron-1.3.0.tgz#0bb4bc0bd8f493b81b5599a3719520d1d633e669"
+
 "@xmpp/jid@^0.0.2":
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/@xmpp/jid/-/jid-0.0.2.tgz#0d528ca9d58dafc833665564ffe62f332a3167f2"
