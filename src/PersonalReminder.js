@@ -17,14 +17,18 @@ class PersonalReminder {
     }
 
     start() {
+        if (!this.cronTime || this.cronTime.length <= 0) {
+            console.log('env PERSONAL_CRON not defined, not starting personal reminders')
+            return
+        }
         console.log('starting personal reminder with cron ', this.cronTime)
-        if (!fs.existsSync(this.mappingFile)) {
-            console.log('no mappings file found, skipping personal reminders')
+        if (!this.mappingFile || !fs.existsSync(this.mappingFile)) {
+            console.log('env PERSONAL_MAPPING_FILE not readable, not starting personal reminders')
             return
         }
         this.userMapping = _(JSON.parse(fs.readFileSync(this.mappingFile)))
         if (this.userMapping.length <= 0) {
-            console.log('no mappings in file found, skipping personal reminders')
+            console.log('env PERSONAL_MAPPING_FILE no mappings found, not starting personal reminders')
             return
         }
         this.job = new Cron.CronJob(this.cronTime, this.tick, null, true, 'Europe/Vienna', this)

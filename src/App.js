@@ -57,12 +57,6 @@ class App {
     if (!process.env.SLACK_BOT_TOKEN) {
       errors.push('Error: SLACK_BOT_TOKEN is missing.')
     }
-    if (!process.env.PERSONAL_CRON) {
-      errors.push('Error: PERSONAL_CRON is missing.')
-    }
-    if (!process.env.PERSONAL_MAPPING_FILE) {
-      errors.push('Error: PERSONAL_MAPPING_FILE is missing.')
-    }
 
     if (errors.length > 0) {
       errors.forEach((error) => console.error(error))
