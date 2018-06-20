@@ -109,7 +109,7 @@ You need to grant your token the following required scopes to execute queries fr
 
 Cron spec for personal reminders (all prs where your review is requested).
 
-E.g. `PERSONAL_CRON="8 * * * 1-5"` at 8am every week day.
+E.g. `PERSONAL_CRON="0 8 * * 1-5"` at 8am every week day.
 
 ### PERSONAL_MAPPING_FILE (optional)
 
