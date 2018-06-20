@@ -47,7 +47,12 @@ class PullRequests {
   }
 
   formatPullRequest(pr, index) {
-    return `${index+1}. \`${pr.title}\` ${pr.url} by ${pr.author.login}`
+    let reviewText = "no reviewer assigned"
+    const reviewers = _.map(pr.reviewRequests.nodes, rr => { return rr.requestedReviewer.login || rr.requestedReviewer.name })
+    if (reviewers.length > 0) {
+      reviewText = `reviewer: ${reviewers.join(' ')}`
+    }
+    return `${index+1}. \`${pr.title}\` ${pr.url} by ${pr.author.login} ${reviewText}`
   }
 
   convertToSlackMessages() {
