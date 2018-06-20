@@ -16,9 +16,10 @@
     "prepush": "npm run lint"
   },
   "dependencies": {
-    "@types/cron": "^1.3.0",
     "axios": "^0.18.0",
     "botkit": "^0.6.13",
+    "cron": "^1.3.0",
+    "ignore-case": "^0.1.0",
     "lodash": "^4.17.10"
   },
   "devDependencies": {

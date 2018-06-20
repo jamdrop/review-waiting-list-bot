@@ -104,3 +104,17 @@ You need to grant your token the following required scopes to execute queries fr
 - `repo`
 - `read:org`
 - `read:discussion`
+
+### PERSONAL_CRON (optional)
+
+Cron spec for personal reminders (all prs where your review is requested).
+
+E.g. `PERSONAL_CRON="8 * * * 1-5"` at 8am every week day.
+
+### PERSONAL_MAPPING_FILE (optional)
+
+Mapping from slack username to github username, every entry will be reminded according to `PERSONAL_CRON`.
+
+This file can be added via your Dockerfile to your container or mounted at runtime ( using dockers `--mount` option )
+
+E.g. `PERSONAL_MAPPING_FILE="usermappings.json"`

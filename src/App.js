@@ -11,12 +11,18 @@ class App {
   static start() {
     this.beforeValidate()
 
-    const controller = new SlackBot().getController()
+    const bot = new SlackBot()
+    const controller = bot.getController()
+
     controller.hears("ls (.+)", ["direct_message", "direct_mention", "mention"], this.ls)
+    controller.on('spawned', this.spawned)
 
-    const reminder = new PersonalReminder(controller)
+    bot.spawn()
+  }
+
+  static spawned(bot) {
+    const reminder = new PersonalReminder(bot)
     reminder.start()
-
   }
 
   static ls(bot, message) {
@@ -53,6 +59,9 @@ class App {
     }
     if (!process.env.PERSONAL_CRON) {
       errors.push('Error: PERSONAL_CRON is missing.')
+    }
+    if (!process.env.PERSONAL_MAPPING_FILE) {
+      errors.push('Error: PERSONAL_MAPPING_FILE is missing.')
     }
 
     if (errors.length > 0) {
