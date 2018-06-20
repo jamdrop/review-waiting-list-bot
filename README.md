@@ -118,3 +118,16 @@ Mapping from slack username to github username, every entry will be reminded acc
 This file can be added via your Dockerfile to your container or mounted at runtime ( using dockers `--mount` option )
 
 E.g. `PERSONAL_MAPPING_FILE="usermappings.json"`
+
+The content should look like this:
+```json
+[{
+        "slackUserName": "foo",
+        "githubUser": "bar"
+    },
+    {
+        "slackUserName": "foo",
+        "githubUser": "bar"
+    }
+]]
+```
