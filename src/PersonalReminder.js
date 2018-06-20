@@ -40,7 +40,7 @@ class PersonalReminder {
 
             const gitHub = new GitHubApiClient()
 
-            for (const mapping of this.mappings) {
+            for (const mapping of this.userMapping) {
 
                 const matches = _(data.members).filter(m => ignoreCase.equals(mapping.slackUserName, m.name)).value()
                 if ( !matches || matches.length <= 0 ) {
