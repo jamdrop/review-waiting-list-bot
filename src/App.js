@@ -28,6 +28,7 @@ class App {
 
   static ls(bot, message) {
     const conditions = new Parser(message.match[1]).parse()
+    debug('got message: ', conditions)
 
     const client = new GitHubApiClient()
 
@@ -60,8 +61,8 @@ class App {
     }
 
     if (errors.length > 0) {
-      errors.forEach((error) => debug(error))
-      debug('Cannot continue to start the bot due to critical lack of parameters.')
+      errors.forEach((error) => console.error(error))
+      console.error('Cannot continue to start the bot due to critical lack of parameters.')
       process.exit(1)
     }
   }

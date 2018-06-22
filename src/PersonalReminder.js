@@ -36,6 +36,7 @@ class PersonalReminder {
     }
 
     tick() {
+        debug('start reminder')
         this.bot.api.users.list({}, (err, data) => {
 
             if (err) {
@@ -56,6 +57,7 @@ class PersonalReminder {
                 const conditions = new Parser(`review-requested:${mapping.githubUser}`).parse()
 
                 gitHub.getAllPullRequests(conditions).then((prs) => {
+                    debug(`reminding ${mapping.slackUserName} of ${prs.length} open PRs for ${mapping.githubUser}`)
                     if (prs.length>0) {
                         this.bot.startPrivateConversation({ user: matches[0].id } , (err, convo) => {
 
