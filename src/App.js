@@ -6,6 +6,7 @@ const PullRequests = require('./PullRequests')
 const Parser = require('./Parser')
 const PersonalReminder = require('./PersonalReminder')
 const _ = require('lodash')
+const debug = require('debug')('App')
 
 class App {
   static start() {
@@ -59,8 +60,8 @@ class App {
     }
 
     if (errors.length > 0) {
-      errors.forEach((error) => console.error(error))
-      console.error('Cannot continue to start the bot due to critical lack of parameters.')
+      errors.forEach((error) => debug(error))
+      debug('Cannot continue to start the bot due to critical lack of parameters.')
       process.exit(1)
     }
   }

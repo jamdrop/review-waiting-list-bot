@@ -7,6 +7,7 @@ const GitHubApiClient = require("./GitHubApiClient")
 const Parser = require('./Parser')
 const PullRequests = require('./PullRequests')
 const ignoreCase = require('ignore-case')
+const debug = require('debug')('PersonalReminder')
 
 
 class PersonalReminder {
@@ -18,17 +19,17 @@ class PersonalReminder {
 
     start() {
         if (!this.cronTime || this.cronTime.length <= 0) {
-            console.log('env PERSONAL_CRON not defined, not starting personal reminders')
+            debug('env PERSONAL_CRON not defined, not starting personal reminders')
             return
         }
         console.log('starting personal reminder with cron ', this.cronTime)
         if (!this.mappingFile || !fs.existsSync(this.mappingFile)) {
-            console.log('env PERSONAL_MAPPING_FILE not readable, not starting personal reminders')
+            debug('env PERSONAL_MAPPING_FILE not readable, not starting personal reminders')
             return
         }
         this.userMapping = _(JSON.parse(fs.readFileSync(this.mappingFile)))
         if (this.userMapping.length <= 0) {
-            console.log('env PERSONAL_MAPPING_FILE no mappings found, not starting personal reminders')
+            debug('env PERSONAL_MAPPING_FILE no mappings found, not starting personal reminders')
             return
         }
         this.job = new Cron.CronJob(this.cronTime, this.tick, null, true, 'Europe/Vienna', this)
@@ -48,8 +49,8 @@ class PersonalReminder {
 
                 const matches = _(data.members).filter(m => ignoreCase.equals(mapping.slackUserName, m.name)).value()
                 if ( !matches || matches.length <= 0 ) {
-                    console.log("not found:", mapping.slackUserName)
-                    return
+                    debug(`no slack user found with mapping { ${mapping.slackUserName}, ${mapping.githubUser} }, skipping`)
+                    continue
                 }
 
                 const conditions = new Parser(`review-requested:${mapping.githubUser}`).parse()
@@ -75,7 +76,7 @@ class PersonalReminder {
                         })
                     }
                 }).catch(error => {
-                    console.error(error)
+                    debug(error)
                 })
             }
         })
