@@ -1,10 +1,15 @@
 'use strict'
 
 const Botkit = require('botkit')
+const _ = require('lodash')
 
 class SlackBot {
   constructor() {
-    this.controller = Botkit.slackbot({debug: !!process.env.DEBUG})
+    let myDebug = false
+    if ( _.includes(process.env.DEBUG, 'slackbot')) {
+      myDebug = true
+    }
+    this.controller = Botkit.slackbot({debug: myDebug})
   }
 
   spawn() {

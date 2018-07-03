@@ -2,6 +2,7 @@
 
 const axios = require("axios")
 const _ = require("lodash")
+const debug = require('debug')('GitHubApiClient')
 
 class GitHubApiClient {
   constructor() {
@@ -178,6 +179,18 @@ class GitHubApiClient {
 
     const prs = await this.getPullRequestsForAuthors(author, repo, user, org, reviewRequested)
     return _.flattenDeep(prs)
+  }
+
+  async verifyUser(username, team = null) {
+    return new Promise((resolve, reject) => {
+      this.client.get('users', username ).then( data => {
+        debug(`trying team ${team}`)
+        resolve(data)
+        return Promise.resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
 
   isTeam(author) {
